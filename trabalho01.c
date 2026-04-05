@@ -68,7 +68,7 @@ void limparBuffer() {
 bool validarCpf(char *cpfOriginal){
     //Tamanho da string inválido(somente numeros = 11, com pontuação = 14)
     int tamanho = strlen(cpfOriginal);
-    if( tamanho != 11 && tamanho != 14){ printf("tamanho"); return false;}
+    if( tamanho != 11 && tamanho != 14) return false;
 
     //Pegar CPF digito a digito
     int digitos[11] = {0};
@@ -85,10 +85,7 @@ bool validarCpf(char *cpfOriginal){
     }
 
     //Digitos faltando
-    if(j != 11) {
-        printf("digitos faltando");
-        return false;
-    }
+    if(j != 11) return false;
 
     //Se todos os digitos forem iguais é inválido
     bool todosIguais = true;
@@ -98,7 +95,7 @@ bool validarCpf(char *cpfOriginal){
             break;
         }
     }
-    if(todosIguais) {printf("iguais"); return false;}
+    if(todosIguais) return false;
 
     // Cálculo do 1º Dígito Verificador
     int soma = 0;
@@ -109,7 +106,7 @@ bool validarCpf(char *cpfOriginal){
     if(primeiroVerificador >= 10){
         primeiroVerificador = 0;
     }
-    if(digitos[9] != primeiroVerificador) {printf("1VER");return false;}
+    if(digitos[9] != primeiroVerificador) return false;
 
     // Cálculo do 2º Dígito Verificador
     soma = 0;
@@ -852,7 +849,6 @@ void testes(ListaPacientes *DB, ListaPacientes *fila){
     for(int i=0; i < qtdExemplos; i++){
         Paciente *p = inicializarPaciente();
         *p = pacientesExemplo[i];
-        bool erroValidação = false;
         if(!validarCpf(p->cpf) || !validarTelefone(p->telefone)){
             printf(ANSI_COLOR_RED"\nOcorreu um erro de validação\n"ANSI_COLOR_RESET);
             continue;
